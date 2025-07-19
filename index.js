@@ -15,14 +15,14 @@ admin.initializeApp({
 });
 
 // Middleware
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: ["http://localhost:5173","https://ph11-assignment-11-saklain.web.app"], credentials: true }));
 app.use(express.json());
 
 // Token Verification Middleware
 const verifyFirebaseToken = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "Providing problem" });
+    return res.status(401).json({ message: "Not token provided" });
   }
 
   const idToken = authHeader.split(" ")[1];
@@ -35,7 +35,7 @@ const verifyFirebaseToken = async (req, res, next) => {
   }
 };
 
-// MongoDB Connection
+// MongoDB Connection/
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
@@ -46,7 +46,7 @@ async function run() {
     const requestCollection = db.collection("foodRequests");
 
     // Test Route (Protected)
-    app.get("/", verifyFirebaseToken, (req, res) => {
+    app.get("/", (req, res) => {
       res.send("Welcome to the secure backend!");
     });
 
