@@ -57,13 +57,13 @@ async function run() {
       res.send(result);
     });
 
-    // GET: Available Foods
+    // GET: Available Foods:
     app.get("/available-foods", async (req, res) => {
       const result = await foodCollection.find({ status: "available" }).toArray();
       res.send(result);
     });
 
-    // GET: Food by ID
+    // GET: Food by ID:
     app.get("/food/:id", async (req, res) => {
       const id = req.params.id;
       const food = await foodCollection.findOne({ _id: new ObjectId(id) });
